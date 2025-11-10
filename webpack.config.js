@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     mode: "development",
@@ -9,10 +10,18 @@ module.exports = {
         clean: true,
     },
 
-    devtool: "eva;-source-map",
+    devtool: "inline-source-map",
     devServer: {
-        static: "./dist",
+         watchFiles: ["./src/template.html"],
+         static: "./dist",
+         open: true,
     },
+
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: "./src/template.html",
+        }),
+    ],
 
     module: {
         rules: [
@@ -20,6 +29,12 @@ module.exports = {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
             },
+            {
+                test: /\.html$/i,
+                loader: "html-loader",
+            },
         ] ,
-    }
+    },
+
+   
 }
